@@ -1,22 +1,54 @@
-# XXX
+# sqlite mode
 
-useful commands
+A `mode()` aggregate function for sqlite.
 
-```
-objdump -t -M intel mode.dylib
+# Build
 
-objdump --disassemble-symbols=_modeDataInit -M intel mode.dylib
-
-otool -Iv mode.dylib
-```
-
-
-## lldb session
+linux:
 
 ```
-lldb -n sqlite3
-b &modeDataInit
-c
+clang -g -shared -fPIC -Wall -Wl,-lbsd,-lsqlite3,-lc -O2 -Werror -o mode.dylib mode.c modemath.c
+```
+
+mac osx:
+
+```
+clang -g -fPIC -Wall -dynamiclib -Wl,-lsqlite3,-lc,-L$HOME/opt/anaconda3/lib/ -I $HOME/opt/anaconda3/include -arch x86_64 -O2 -Werror -o mode.dylib mode.c modemath.c
+```
+
+# Example usage
+
+Load module & create test table
+
+```
+sqlite3 -cmd ".load $(pwd)/mode" \
+ -cmd "create table people (name varchar(10), age numeric); insert into people values ('me', 1), ('you', 2), ('them', 2);" \
+ :memory:
+```
+
+Use the `mode` function
+
+```
+sqlite> select mode(age) from people
+2.0
+```
+
+
+# Debugging
+
+1. In terminal A: Run interactive sqlite3 interactive shell and load module as described above
+2. In terminal B: start lldb & attach
+
+    ```
+    lldb -n sqlite3
+    b &modeDataInit
+    c
+    ```
+
+3. In terminal A: run mode function in sql statement
+4. In terminal B: go back to lldb and continue the deubugging session...
+
+```
 (lldb) frame variable
 (ModeData *) data = 0x00007fbeb0016838
 (lldb) frame variable *data
@@ -71,7 +103,7 @@ PIC function with zero variables start: save base pointer register to stack, mov
 
 Compare with another funciton:
 
-objdump -M intel --disassemble-symbols=_modeDataFinish mode.dylib 
+objdump -M intel --disassemble-symbols=_modeDataFinish mode.@(so|dynlib) 
 
 ```
 0000000000003e00 <_modeDataFinish>:
@@ -102,4 +134,14 @@ First parameter to function (pointer to data) is passed in rdi
 Return value is in eax
 
 xor operations with the same register are used to zero the register
+
+## Other useful commands
+
+```
+objdump -t -M intel mode.@(so|dynlib) 
+
+objdump --disassemble-symbols=_modeDataInit -M intel mode.@(so|dynlib) 
+
+otool -Iv mode.@(so|dynlib) 
+```
 

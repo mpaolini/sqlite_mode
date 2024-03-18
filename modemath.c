@@ -1,6 +1,7 @@
 #include "modemath.h"
 #include <string.h>
 #include <math.h>
+#include <bsd/stdlib.h>
 
 #define MODE_INDEX_FOUND 4
 #define MODE_INDEX_NOT_FOUND 5

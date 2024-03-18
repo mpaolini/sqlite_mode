@@ -1,6 +1,3 @@
-/*
-** build with: clang -g -fPIC -Wall -dynamiclib -Wl,-lsqlite3,-lc,-L/Users/markopaolini/opt/anaconda3/lib/ -I /Users/markopaolini/opt/anaconda3/include -arch x86_64 -O2 -Werror -o mode.dylib mode.c modemath.c
-*/
 #include "sqlite3ext.h"
 SQLITE_EXTENSION_INIT1
 #include <string.h>
