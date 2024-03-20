@@ -2,6 +2,11 @@
 
 A `mode()` aggregate function for sqlite.
 
+> [!WARNING]
+> Not for production use.
+
+See [license](LICENSE.txt)
+
 # Build
 
 linux:

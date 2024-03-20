@@ -25,7 +25,7 @@ getData(sqlite3_context *context)
         {
             char *err = "mode data init error";
             sqlite3_result_error(context, err, strlen(err));
-            return 0;
+            return NULL;
         }
         data->init = 1;
     }

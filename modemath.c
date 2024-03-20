@@ -36,6 +36,7 @@ int computeMode(ModeData *data, double *result, int *hasResult)
     *hasResult = 0;
     for (size_t i = 0, idx; i < data->size; i++)
     {
+        // TODO: improve performance, see #1
         if (indexOf(&summaryValues, data->values[i], &idx) == MODE_INDEX_FOUND)
         {
             summaryOccurrences.values[idx]++;
