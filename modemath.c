@@ -1,7 +1,7 @@
 #include "modemath.h"
 #include <string.h>
 #include <math.h>
-#ifdef HAVE_LIBBSD
+#ifdef __linux__
 #include <bsd/stdlib.h>
 #else
 #include <stdlib.h>
