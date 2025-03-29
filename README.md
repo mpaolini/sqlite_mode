@@ -11,8 +11,10 @@ See [license](LICENSE.txt)
 
 ## linux
 
+Install required packages: `libbsd-devel sqlite-devel lldb clang perf`
+
 ```
-clang -g -shared -fPIC -Wall -Wl,-lbsd,-lsqlite3,-lc -O2 -Werror -o mode.dylib mode.c modemath.c
+clang -g -shared -fPIC -Wall -Wl,-lbsd,-lsqlite3,-lc -O2 -Werror -o mode.so mode.c modemath.c
 ```
 
 ## mac osx
@@ -31,7 +33,8 @@ clang -g -fPIC -Wall -dynamiclib -Wl,-lsqlite3,-lc,-L$HOME/opt/anaconda3/lib/ -I
 linux:
 
 ```
-TODO
+clang -g -fPIC -Wall -Wl,-lbsd,-lsqlite3,-lc -O0 -Werror -o test test.c
+LD_LIBRARY_PATH=$(pwd) ./test
 ```
 
 mac osx:
