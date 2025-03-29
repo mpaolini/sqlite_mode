@@ -24,12 +24,7 @@ getData(sqlite3_context *context)
     }
     if (!data->init)
     {
-        if (modeDataInit(&data->modeData) != MODE_OK)
-        {
-            char *err = "mode data init error";
-            sqlite3_result_error(context, err, strlen(err));
-            return NULL;
-        }
+        modeDataInit(&data->modeData);
         data->init = 1;
     }
     return data;

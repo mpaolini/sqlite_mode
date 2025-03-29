@@ -11,7 +11,7 @@ typedef struct ModeData
 
 int computeMode(ModeData *data, double *result, int *hasResult);
 
-int modeDataInit(ModeData *data);
+void modeDataInit(ModeData *data);
 
 void modeDataFinish(ModeData *data);
 

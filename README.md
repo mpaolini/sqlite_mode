@@ -9,16 +9,37 @@ See [license](LICENSE.txt)
 
 # Build
 
-linux:
+## linux
 
 ```
 clang -g -shared -fPIC -Wall -Wl,-lbsd,-lsqlite3,-lc -O2 -Werror -o mode.dylib mode.c modemath.c
 ```
 
-mac osx:
+## mac osx
+
+Prerequisites:
+
+* Install anaconda, because the stock sqlite3 shipped with MacOS does not work.
+* Set path to anancoda so `which sqlite3` points to the new version.
 
 ```
 clang -g -fPIC -Wall -dynamiclib -Wl,-lsqlite3,-lc,-L$HOME/opt/anaconda3/lib/ -I $HOME/opt/anaconda3/include -arch x86_64 -O2 -Werror -o mode.dylib mode.c modemath.c
+```
+
+# Test
+
+linux:
+
+```
+TODO
+```
+
+mac osx:
+
+```
+clang -g -fPIC -Wall -Wl,-lsqlite3,-lc,-L$HOME/opt/anaconda3/lib/ -I $HOME/opt/anaconda3/include -arch x86_64 -O2 -Werror -o test test.c
+
+env DYLD_LIBRARY_PATH=$HOME/opt/anaconda3/lib ./test
 ```
 
 # Example usage
@@ -34,7 +55,7 @@ sqlite3 -cmd ".load $(pwd)/mode" \
 Use the `mode` function
 
 ```
-sqlite> select mode(age) from people
+sqlite> select mode(age) from people;
 2.0
 ```
 
@@ -147,6 +168,7 @@ objdump -t -M intel mode.@(so|dynlib)
 
 objdump --disassemble-symbols=_modeDataInit -M intel mode.@(so|dynlib) 
 
-otool -Iv mode.@(so|dynlib) 
+otool -Iv mode.@(so|dynlib)
+otool -L mode.@(so|dynlib)
 ```
 
