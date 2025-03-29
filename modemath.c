@@ -24,15 +24,8 @@ int computeMode(ModeData *data, double *result, int *hasResult)
     ModeData summaryValues;
     ModeData summaryOccurrences;
     int status = MODE_OK;
-    if ((status = modeDataInit(&summaryValues)) != MODE_OK)
-    {
-        return status;
-    }
-    if ((status = modeDataInit(&summaryOccurrences)) != MODE_OK)
-    {
-        modeDataFinish(&summaryValues);
-        return status;
-    }
+    modeDataInit(&summaryValues);
+    modeDataInit(&summaryOccurrences);
     *hasResult = 0;
     for (size_t i = 0, idx; i < data->size; i++)
     {
@@ -72,10 +65,9 @@ stop:
     return status;
 }
 
-int modeDataInit(ModeData *data)
+void modeDataInit(ModeData *data)
 {
     memset(data, 0, sizeof(ModeData));
-    return MODE_OK;
 }
 
 void modeDataFinish(ModeData *data)

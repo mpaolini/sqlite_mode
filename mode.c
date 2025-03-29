@@ -1,3 +1,6 @@
+/*
+** SQLITE mode extension library
+*/
 #include "sqlite3ext.h"
 SQLITE_EXTENSION_INIT1
 #include <string.h>
